@@ -207,6 +207,19 @@ export const videoCommand = cli({
             result.comments = findStatByIcon('comment') !== '0' ? findStatByIcon('comment') : parseNumber('评论');
             result.favs = findStatByIcon('fav') !== '0' ? findStatByIcon('fav') : parseNumber('收藏');
 
+            // 针对外链预览卡片 (finder-preview) 补充提取底栏 4 项互动数值
+            if (result.likes === '0' && result.forwards === '0' && result.favs === '0' && result.comments === '0') {
+                const numCandidates = Array.from(document.querySelectorAll('div, span, p'))
+                    .filter(el => /^\d+$/.test(el.innerText.trim()) && el.children.length === 0)
+                    .map(el => el.innerText.trim());
+                if (numCandidates.length >= 4) {
+                    result.likes = numCandidates[0] || '0';
+                    result.forwards = numCandidates[1] || '0';
+                    result.favs = numCandidates[2] || '0';
+                    result.comments = numCandidates[3] || '0';
+                }
+            }
+
             // 9. 提取话题标签
             if (result.content) {
                 const tagMatches = result.content.match(/#([^#\s，。！？、\n]+)/g);
