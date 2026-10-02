@@ -1,0 +1,29 @@
+# Python 编译缓存
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# 环境变量与敏感凭据 (严格隔离)
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+data/credentials.json
+
+# 本地运行时与日志产物
+*.log
+logs/
+output/
+dist/
+build/
+*.egg-info/
+
+# 操作系统与 IDE 缓存
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.opencli/traces/
